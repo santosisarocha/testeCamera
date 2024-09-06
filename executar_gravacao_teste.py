@@ -30,7 +30,7 @@ def iniciar_gravacao():
             hora = dataHora.strftime("%H_%M")
             nome_mp4 = f"gravacao{dia}_{hora}.mp4"
 
-            gravacao = cv2.VideoWriter(nome_mp4, cv2.VideoWriter_fourcc(*"mp4v"), fps, (w, h))
+            gravacao = cv2.VideoWriter(f'/home/admin/Vídeos/{nome_mp4}', cv2.VideoWriter_fourcc(*"mp4v"), fps, (w, h))
 
             # Gravação iniciada
             gravando = True
