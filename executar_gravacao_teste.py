@@ -1,8 +1,5 @@
-# pip install opencv-python
-# pip install schedule
-
 import time
-from datetime import datetime, date
+from datetime import datetime
 import cv2
 import schedule
 
@@ -10,12 +7,13 @@ import schedule
 filmagem = None
 gravacao = None
 gravando = False
+fps = 30  
 
 def exibir_mensagem(mensagem):
     print(f"{datetime.now()}: {mensagem}")
 
 def iniciar_gravacao():
-    global filmagem, gravacao, gravando
+    global filmagem, gravacao, gravando, fps
 
     if not gravando:
         try:
@@ -25,7 +23,6 @@ def iniciar_gravacao():
 
             w = int(filmagem.get(cv2.CAP_PROP_FRAME_WIDTH))
             h = int(filmagem.get(cv2.CAP_PROP_FRAME_HEIGHT))
-            fps = int(filmagem.get(cv2.CAP_PROP_FPS))
 
             # Nome do arquivo 
             dataHora = datetime.now()
@@ -42,7 +39,6 @@ def iniciar_gravacao():
             exibir_mensagem(f"Erro ao iniciar a gravação: {e}")
 
 def parar_gravacao():
-
     global filmagem, gravacao, gravando
 
     if gravando:
@@ -60,16 +56,11 @@ def parar_gravacao():
         gravacao = None
         exibir_mensagem("Gravação finalizada")
 
-    # Se não estiver gravando, não faz nada.
-
 def agendar_gravacao():
-    # Teste Horario 1
-    schedule.every().day.at("14:00").do(iniciar_gravacao)
-    schedule.every().day.at("14:02").do(parar_gravacao)
-    # Teste Horario 2
+    schedule.every().day.at("15:05").do(iniciar_gravacao)
+    schedule.every().day.at("15:07").do(parar_gravacao)
     schedule.every().day.at("14:05").do(iniciar_gravacao)
     schedule.every().day.at("14:08").do(parar_gravacao)
-    # Teste Horario 3
     schedule.every().day.at("14:10").do(iniciar_gravacao)
     schedule.every().day.at("14:12").do(parar_gravacao)
 
@@ -84,6 +75,4 @@ if __name__ == "__main__":
             if success:
                 gravacao.write(frame)
         
-        time.sleep(1)
-
 
